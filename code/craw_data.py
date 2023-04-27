@@ -20,7 +20,7 @@ from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 
 def main():
-    start_date = date(2020, 1, 1)
+    start_date = date(2022, 6, 1)
     craw_data(start_date)
 
 
