@@ -20,8 +20,9 @@ from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 
 def main():
-    start_date = date(2022, 6, 1)
-    craw_data(start_date)
+    start_date = date(2021, 5, 1)
+    end_date = date(2021, 6, 1)
+    craw_data(start_date, end_date)
 
 
 def find_requests(driver, company_selector=None, luzi_selector=None, data_selector=None):
@@ -118,15 +119,17 @@ def replace_query_params_with_dict(url_string, replacement_dict):
     return modified_url
 
 
-def craw_data(start_date):
+def craw_data(start_date, end_date=None):
     try:
         headers = {
             'User-Agent': 'Mozilla'
                           '/5.0 (Macintosh; Intel Mac OS X 10_14) ''AppleWebKit'
-                          '/605.1.15 (KHTML, like Gecko) ''Version/12.0 Safari/605.1.15'}
+                          '/605.1.15 (KHTML, like Gecko) ''Version/12.0 Safari/605.1.15',
+        'Connections':'close'}
 
         file_path = './data/'
-        end_date = datetime.now().date()
+        if not_date:
+            end_date = datetime.now().date()
         delta = timedelta(days=1)
 
         df_code = pd.read_csv(os.path.join(file_path, 'luzi_code.csv'))
@@ -165,7 +168,7 @@ def craw_data(start_date):
         wd.close()
 
         current_date = start_date
-        while current_date <= end_date:
+        while current_date < end_date:
             current_date_str = current_date.strftime('%Y%m%d')
 
             for ps in ps_code_list:
